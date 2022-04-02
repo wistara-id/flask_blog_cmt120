@@ -1,0 +1,90 @@
+/*
+* Custom CSS to style the blog website
+*/
+body {
+  height: 100%;
+  padding-top: 4.5rem;
+}
+
+.form-cosmetic {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-cosmetic .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-cosmetic input {
+  margin-bottom: 10px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-cosmetic input[type="submit"] {
+  margin-top: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.success-messages {
+  font-weight: bold;
+  color: black;
+}
+
+.error-messages {
+  font-weight: bold;
+  color: red;
+}
+
+.row {
+  border: 1px solid rgba(86, 61, 124, .2);
+  padding: 15px;
+  margin-bottom: 27px;
+  border-radius: 0px 40px 0px 40px;
+}
+
+.post-nopad {
+  border: 0px solid rgba(86, 61, 124, .2);
+  padding: 10px;
+  margin-bottom: 0px;
+}
+
+.comment-text-area {
+  border: 1px solid rgba(86, 61, 124, .2);
+}
+
+.submit-comment-button {
+  margin-top: 20px;
+}
+
+.row-comment {
+  border: 1px solid rgba(86, 61, 124, .2);
+  padding: 10px;
+  padding-bottom: 0px;
+  margin-bottom: 15px;
+  border-radius: 0px 27px 0px 27px;
+}
+
+.image_pad {
+  padding-left: 20px;
+  padding-bottom: 15px;
+}
+
+.justify_the_text {
+  text-align: justify;
+}
+
+.table {
+  margin-bottom: 20px;
+}
+
+.fontpx {
+  font-size: 17.5px;
+}
+
+.link-dark:hover {
+  color: #0d6efd;
+}

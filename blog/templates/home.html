@@ -1,0 +1,56 @@
+<!-- The code for home.html template
+--
+-- This code was adapted from Cardiff University Gitlab Repository by Natasha Edwards 18-11-2021
+-- accessed 21-01-2022
+-- https://git.cardiff.ac.uk/scmne/flask-labs/
+--
+-- The adapted code is customized to cater the blog website assessment specification
+-->
+
+<!-- Use of Jinja, flask_wtf and wtforms to build the blog website
+--
+-- This code was built using Jinja, FlaskWTF and WTForms documentation by WTForms [No Date]
+-- accessed 21-01-2022
+-- https://jinja.palletsprojects.com/en/3.0.x/
+-- https://wtforms.readthedocs.io/en/3.0.x/
+-- https://flask-wtf.readthedocs.io/en/1.0.x/
+--
+-- The adapted code is customized to cater the blog website assessment specification
+-->
+
+{% extends 'layout.html' %}
+{% block content %}
+<div class='row post-nopad'>
+  <form method='POST' action='/home'>
+    {{ form.csrf_token }}
+    <p id='select_field'>{{ form.sort_option.label }} {{ form.sort_option(**{'onchange':'this.form.submit()'}) }}</p>
+  </form>
+</div>
+<section id='blog_post' class='blog_post fw-normal'>
+  {% for post in posts %}
+  <div class='row'>
+    <div class='col-9'>
+      <div class='row post-nopad'>
+        <a href='{{ url_for('post', post_id=post.id) }}' class='link-dark text-decoration-none'>
+          <p id='post_title' class='post_title h4 mb-3 fw-normal'>{{ post.title }}</p>
+          <p>by {{ post.user.firstname }} on {{ post.date }}</p>
+        </a>
+        <div id='short_description' class='short_description justify_the_text fontpx'>
+          {{ post.content|safe|truncate(327, False, '...')}}
+        </div>
+        <a href='{{ url_for('post', post_id=post.id) }}' class='link-dark text-decoration-none'>
+          <p>Read More >></p>
+        </a>
+      </div>
+    </div>
+    <div class='col-3'>
+      <div class='row post-nopad'>
+        <a href='{{ url_for('post', post_id=post.id) }}'>
+          <img src='{{ url_for('static', filename='img/' + post.image_file) }}' class = 'img-responsive' width = '100%'>
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+{% endblock content %}

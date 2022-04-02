@@ -1,0 +1,98 @@
+<!-- The code for post.html template
+
+-- This code was adapted from Cardiff University Gitlab Repository by Natasha Edwards 18-11-2021
+-- accessed 21-01-2022
+-- https://git.cardiff.ac.uk/scmne/flask-labs/
+--
+-- The adapted code is customized to cater the blog website assessment specification
+-->
+
+<!-- Use of Jinja, flask_wtf and wtforms to build the blog website
+--
+-- This code was built using Jinja, FlaskWTF and WTForms documentation by WTForms [No Date]
+-- accessed 21-01-2022
+-- https://jinja.palletsprojects.com/en/3.0.x/
+-- https://wtforms.readthedocs.io/en/3.0.x/
+-- https://flask-wtf.readthedocs.io/en/1.0.x/
+--
+-- The adapted code is customized to cater the blog website assessment specification
+-->
+
+{% extends 'layout.html' %}
+{% block content %}
+<div class='row post-nopad'>
+  <a href='{{ url_for('home') }}' class='link-dark text-decoration-none'><< Back to Home</a>
+</div>
+<section id='individual_post' class='individual_post'>
+  <div class='row'>
+    <div class='col'>
+      <div class='row post-nopad'>
+        <p id='post_title' class='post_title h3 mb-3 fw-normal'>{{ post.title }}</p>
+        <p>by {{ post.user.firstname }} on {{ post.date }}</p>
+      </div>
+      <div class="row post-nopad clearfix">
+        <div>
+          <img src='{{ url_for('static', filename='img/' + post.image_file) }}' class = 'img-responsive float-end image_pad' width = '40%'>
+          <div id='detailed_description' class='detailed_description justify_the_text fontpx'>
+            {{ post.content|safe }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id='post_rating' class='post_rating'>
+  <div class='row'>
+    <p class='h4 mb-3 fw-normal'>Post Rating</p>
+    <div class='col-8'>
+      <div class='row post-nopad'>
+        {% if current_user.is_authenticated %}
+          {% if user_rating|length > 0 %}
+            <p>You rate this post: {{ user_rating[0].rating_scale }}</p>
+          {% else %}
+            <p>You haven't rate this post yet.</p>
+          {% endif %}
+        {% endif %}
+        {% if ratings|length > 0 %}
+          <p>Total rating for this post is {{ ((ratings | sum(attribute='rating_scale')) / (ratings|length)) |round(2, 'ceil')}} 
+            out of 5 from {{ ratings|length }} registered user(s)</p>
+        {% else %}
+          <p>No rating for this post yet.</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class='col-4'>
+      <div class='row post-nopad'>
+        {% if current_user.is_authenticated %}
+          <form method='POST' action='/post/{{ post.id }}'>
+            {{ form_rating.csrf_token }}
+            <p>{{form_rating.rating_option.label}} {{form_rating.rating_option}}</p>
+            <p><input type='submit' id='submit_rating' name='submit_rating' value='Rate Post'></p>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+<section id='comment_text' class='comment_text'>
+  <div class='row'>
+    <p class="h4 mb-3 fw-normal">Comments</p>
+    {% if current_user.is_authenticated %}
+      <form method='POST' action='/post/{{ post.id }}'>
+          {{ form_comment.csrf_token }}
+          <div id='comment-text-area' class='form-group text-center'>
+            {{ form_comment.comment(class_='form-control') }}
+            <p class='submit-comment-button'><input type='submit' id='submit_comment' name='submit_comment' value='Post Comment'></p>
+          </div>
+      </form>
+    {% endif %}
+    <div class='col'>
+        {% for comment in comments %}
+        <div class='row row-comment'>
+          <p>On <i>{{ comment.date }}</i> &nbsp {{ comment.user.firstname }} &nbsp wrote &nbsp <i>"{{ comment.content }}"</i></p>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock content %}

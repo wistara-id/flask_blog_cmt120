@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!-- The code for layout.html template
+
+-- This code was adapted from Cardiff University Gitlab Repository by Natasha Edwards 18-11-2021
+-- accessed 21-01-2022
+-- https://git.cardiff.ac.uk/scmne/flask-labs/
+--
+-- The adapted code is customized to cater the blog website assessment specification
+-->
+
+<!-- Use of Jinja, flask_wtf and wtforms to build the blog website
+--
+-- This code was built using Jinja, FlaskWTF and WTForms documentation by WTForms [No Date]
+-- accessed 21-01-2022
+-- https://jinja.palletsprojects.com/en/3.0.x/
+-- https://wtforms.readthedocs.io/en/3.0.x/
+-- https://flask-wtf.readthedocs.io/en/1.0.x/
+--
+-- The adapted code is customized to cater the blog website assessment specification
+-->
+
+<html lang='en' class="h-100">
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Hermond Personal Blog</title>
+    <link rel=stylesheet type=text/css href='{{ url_for('static',filename = 'css/bootstrap.min.css')}}'>
+    <link rel=stylesheet type=text/css href='{{ url_for('static',filename ='css/mine.css')}}'>
+  </head>
+
+<!-- The code for the grid layout and navigation bar of the blog website
+
+-- This code was adapted from Bootstrap example by Mark Otto, Jacob Thornton, and Bootstrap contributors [No date]
+-- accessed 21-01-2022
+-- https://getbootstrap.com/docs/5.1/layout/grid/
+-- https://getbootstrap.com/docs/5.1/components/navbar/
+
+-- The adapted code is customized to cater the blog website assessment specification
+-->
+
+  <body class="d-flex flex-column h-100">
+    <header>
+      <nav id='top_navig_bar' class='navbar navbar-expand-md navbar-dark fixed-top bg-dark'>
+        <div class='container'>
+          <div class='navbar-brand'>
+            <ul class='navbar-nav'>
+              <li class='nav-item'>
+                <a id='pers_greet'>
+                  {% if current_user.is_authenticated %}
+                  Hello, {{ current_user.firstname }}!
+                  {% else %}
+                  Hello, Guest!
+                  {% endif %}
+                </a>
+              </li>
+            </ul>
+          </div>
+          <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarCollapse' 
+                        aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'>
+            <span class='navbar-toggler-icon'></span>
+          </button>
+          <div class='collapse navbar-collapse' id='navbarCollapse'>
+            <ul class='navbar-nav ms-auto'>
+              <li class='nav-item'>
+                <a href='{{ url_for('home') }}' class='nav-link' id='home'>Home</a>
+              </li>
+              {% if not current_user.is_authenticated %}
+              <li class='nav-item'>
+                <a href='{{ url_for('register') }}' class='nav-link' id='register'>Register</a>
+              </li>
+              <li class='nav-item'>
+                <a href='{{ url_for('login') }}' class='nav-link' id='login'>Login</a>
+              </li>
+              {% endif %}
+              <li class='nav-item'>
+                {% if current_user.is_authenticated %}
+                <a href='{{ url_for('logout') }}' class='nav-link' id='logout'>Logout</a>
+                {% endif %}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class='container'>
+      <div id='flash_success' class='flash_success'>
+        {% with messages = get_flashed_messages(category_filter=['flash_success']) %}
+          {% if messages %}
+            <ul class='flashes'>
+            {% for message in messages %}
+              <li class='success-messages'>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+      </div>
+      <div id='content'>
+        {% block content %}
+        {% endblock %}
+      </div>
+    </main>
+
+<!-- The code for the sticky footer section of the blog website
+
+-- This code was adapted from Bootstrap example by Mark Otto, Jacob Thornton, and Bootstrap contributors [No date]
+-- accessed 21-01-2022
+-- https://getbootstrap.com/docs/5.1/examples/sticky-footer-navbar/
+
+-- The adapted code is customized to cater the blog website assessment specification
+-->
+
+    <footer id='footer' class='d-flex container justify-content-between footer mt-auto py-3 bg-light border-top'>
+      <ul class='nav pb-3 mb-3'>
+        <li class='nav-item'><a href='#' class='nav-link text-muted'>&copy; 2022 Hermond Personal Blog</a></li>
+      </ul>
+      <ul class='nav pb-3 mb-3'>
+        <li class='nav-item'><a href='#' class='nav-link text-muted'>[ Email ]</a></li>
+        <li class='nav-item'><a href='#' class='nav-link text-muted'>[ LinkedIn ]</a></li>
+        <li class='nav-item'><a href='#' class='nav-link text-muted'>[ Disclaimer ]</a></li>
+        <li class='nav-item'><a href='#' class='nav-link text-muted'>[ Privacy Policy ] </a></li>
+      </ul>
+    </footer>
+    <script src='{{ url_for('static', filename='js/bootstrap.min.js') }}'></script>
+    <script src='{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}'></script>
+    <script src='{{ url_for('static', filename='js/mine.js') }}'></script>
+</body>
+</html>

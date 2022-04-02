@@ -1,0 +1,57 @@
+<!-- The code for login.html template
+
+-- This code was adapted from Cardiff University Gitlab Repository by Natasha Edwards 18-11-2021
+-- accessed 21-01-2022
+-- https://git.cardiff.ac.uk/scmne/flask-labs/
+--
+-- The adapted code is customized to cater the blog website assessment specification
+-->
+
+<!-- Use of Jinja, flask_wtf and wtforms to build the blog website
+--
+-- This code was built using Jinja, FlaskWTF and WTForms documentation by WTForms [No Date]
+-- accessed 21-01-2022
+-- https://jinja.palletsprojects.com/en/3.0.x/
+-- https://wtforms.readthedocs.io/en/3.0.x/
+-- https://flask-wtf.readthedocs.io/en/1.0.x/
+--
+-- The adapted code is customized to cater the blog website assessment specification
+-->
+
+{% extends 'layout.html' %}
+{% block content %}
+<div id='login_error' class='login_error'>
+  {% with login_error = get_flashed_messages(category_filter=['login_error']) %}
+    {% if login_error %}
+      <ul class='flashes'>
+      {% for errors in login_error %}
+        <li class='error-messages'>{{ errors }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+</div>
+
+<!-- The code for the design of login form
+
+-- This code was adapted from Bootstrap example by Mark Otto, Jacob Thornton, and Bootstrap contributors [No date]
+-- accessed 21-01-2022
+-- https://getbootstrap.com/docs/5.1/examples/sign-in/
+
+-- The adapted code is customized to cater the blog website assessment specification
+-->
+
+<form method='POST' action='/login' class='form-cosmetic'>
+  {{ form.csrf_token }}
+  <h1 class='h4 mb-3 fw-normal text-center'>Please login</h1>
+  <div id='username' class='form-floating'>
+    {{ form.username_email(class_='form-control') }}
+    <label for='username'>{{ form.username_email.label }}</label>
+  </div>
+  <div id='password' class='form-floating'>
+    {{ form.password(class_='form-control') }}
+    <label for='password'>{{ form.password.label }}</label>
+  </div>
+  {{ form.submit(class_='w-100 btn btn-lg btn-outline-dark') }}
+</form>
+{% endblock content %}

@@ -1,0 +1,77 @@
+<!-- The code for register.html template
+
+-- This code was adapted from Cardiff University Gitlab Repository by Natasha Edwards 18-11-2021
+-- accessed 21-01-2022
+-- https://git.cardiff.ac.uk/scmne/flask-labs/
+
+-- The adapted code is customized to cater the blog website assessment specification
+-->
+
+<!-- Use of Jinja, flask_wtf and wtforms to build the blog website
+--
+-- This code was built using Jinja, FlaskWTF and WTForms documentation by WTForms [No Date]
+-- accessed 21-01-2022
+-- https://jinja.palletsprojects.com/en/3.0.x/
+-- https://wtforms.readthedocs.io/en/3.0.x/
+-- https://flask-wtf.readthedocs.io/en/1.0.x/
+--
+-- The adapted code is customized to cater the blog website assessment specification
+-->
+
+{% extends 'layout.html' %}
+{% block content %}
+<div id='register_error' class='register_error'>
+  {% with register_error = get_flashed_messages(category_filter=['register_error']) %}
+    {% if register_error %}
+      <ul class='flashes'>
+      {% for errors in register_error %}
+        <li class='error-messages'>{{ errors }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+  {% for error in form.first_name_new.errors %}
+    <li class='error-messages'>{{ error }}</li>
+  {% endfor %}
+  {% for error in form.email_new.errors %}
+    <li class='error-messages'>{{ error }}</li>
+  {% endfor %}
+  {% for error in form.password_new.errors %}
+    <li class='error-messages'>{{ error }}</li>
+  {% endfor %}
+  {% for error in form.password_confirm.errors %}
+    <li class='error-messages'>{{ error }}</li>
+  {% endfor %}
+</div>
+
+<!-- The code for the design of register form
+
+-- This code was adapted from Bootstrap example by Mark Otto, Jacob Thornton, and Bootstrap contributors [No date]
+-- accessed 21-01-2022
+-- https://getbootstrap.com/docs/5.1/examples/sign-in/
+
+-- The adapted code is customized to cater the blog website assessment specification
+-->
+
+<form method='POST' action='/register' class='form-cosmetic'>
+    {{ form.csrf_token }}
+    <h1 class='h4 mb-3 fw-normal text-center'>Please register</h1>
+    <div id='first_name_new' class='form-floating'>
+      {{ form.first_name_new(class_='form-control') }}
+      <label for='first_name_new'>{{ form.first_name_new.label }}</label>
+    </div>
+    <div id='email_new' class='form-floating'>
+      {{ form.email_new(class_='form-control') }}
+      <label for='email_new'>{{ form.email_new.label }}</label>
+    </div>
+    <div id='password_new' class='form-floating'>
+      {{ form.password_new(class_='form-control') }}
+      <label for='password_new'>{{ form.password_new.label }}</label>
+    </div>
+    <div id='password_confirm' class='form-floating'>
+      {{ form.password_confirm(class_='form-control') }}
+      <label for='password_confirm'>{{ form.password_confirm.label }}</label>
+    </div>
+    {{ form.submit(class_='w-100 btn btn-lg btn-outline-dark') }}
+</form>
+{% endblock content %}
