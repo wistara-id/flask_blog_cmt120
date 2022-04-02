@@ -1,2 +1,2 @@
-# flask_blog_cmt120
-Flask Web Blog Development
+# CMT120 - Flask Web Blog Application Development
+Submitted work on flask web blog development.
